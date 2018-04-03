@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using static System.Convert;
@@ -92,7 +92,7 @@ namespace SharpCashAddr
 				converted[a1 + 3] = (byte) (bytes[a2 + 4] % 2 << 7 | bytes[a2 + 5] << 2 | bytes[a2 + 6] >> 3);
 				converted[a1 + 4] = (byte) (bytes[a2 + 6] % 8 << 5 | bytes[a2 + 7]);
 			}
-			converted[a1] = (byte) (bytes[a2] << 3 | bytes[a2 + 1] >> 2);
+			converted[a1] = (byte) (bytes[a2] << 3 | bytes[a2 + 1] >> 2);
 			if (bytes[a2 + 1] % 4 != 0)
 				throw new CashAddrConversionException("Invalid CashAddr.");
 			return converted;
