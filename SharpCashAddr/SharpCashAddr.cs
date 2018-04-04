@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static System.Convert;
 using System.Security.Cryptography;
 
 namespace SharpCashAddr
@@ -15,7 +14,7 @@ namespace SharpCashAddr
 			: base(message) {
 		}
 	}
-	static class Program
+	public static class Converter
 	{
 		private const string CHARSET_BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 		private const string CHARSET_CASHADDR = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
@@ -64,8 +63,7 @@ namespace SharpCashAddr
 			return startValue ^ 1;
 		}
 		private static byte[] convertBitsEightToFive(byte[] bytes) {
-			// 34 + 8
-			byte[] converted = new byte[42];
+			byte[] converted = new byte[34 + 8];
 			int a1 = 0, a2 = 0;
 			for (; a1 < 32; a1 += 8, a2 += 5) {
 				converted[a1] = (byte) (bytes[a2] >> 3);
@@ -82,8 +80,7 @@ namespace SharpCashAddr
 			return converted;
 		}
 		private static byte[] convertBitsFiveToEight(byte[] bytes) {
-			// (1 + 20) + 4
-			byte[] converted = new byte[25];
+			byte[] converted = new byte[(1 + 20) + 4];
 			int a1 = 0, a2 = 0;
 			for (; a2 < 32; a1 += 5, a2 += 8) {
 				converted[a1] = (byte) (bytes[a2] << 3 | bytes[a2 + 1] >> 2);
@@ -113,7 +110,7 @@ namespace SharpCashAddr
 				}
 			}
 			int numZeros = 0;
-			for (; (numZeros < oldAddress.Length) && (oldAddress[numZeros] == ToChar("1")); numZeros++){}
+			for (; (numZeros < oldAddress.Length) && (oldAddress[numZeros] == Convert.ToChar("1")); numZeros++){}
 			byte[] addrBytes = address.ToByteArray();
 			Array.Reverse(addrBytes);
 			// Reminder, addrBytes was converted from BigInteger. So the first byte,
@@ -156,7 +153,6 @@ namespace SharpCashAddr
 				case 0x28:
 					// BitPay P2SH, obsolete!
 				default:
-					//Console.WriteLine(value: addrBytes[0]);
 					throw new CashAddrConversionException("Unexpected address byte.");
 			}
 			if (addrBytes.Length != 25) {
@@ -237,6 +233,7 @@ namespace SharpCashAddr
 			else if (!mainnet && isP2PKH)
 				decodedBytes[0] = 0x6f;
 			else
+				// Warning! Bigger than 0x80.
 				decodedBytes[0] = 0xc4;
 			SHA256 hasher = SHA256Managed.Create();
 			byte[] checksum = hasher.ComputeHash(hasher.ComputeHash(decodedBytes, 0, 21));
@@ -244,17 +241,22 @@ namespace SharpCashAddr
 			decodedBytes[22] = checksum[1];
 			decodedBytes[23] = checksum[2];
 			decodedBytes[24] = checksum[3];
-			System.Text.StringBuilder ret = new System.Text.StringBuilder(36);
+			System.Text.StringBuilder ret = new System.Text.StringBuilder(40);
 			for (int numZeros = 0; numZeros < 25 && decodedBytes[numZeros] == 0; numZeros++)
 				ret.Append("1");
-			Array.Reverse(decodedBytes);
+			{
+				var temp = new List<byte>(decodedBytes);
+				// for 0xc4
+				temp.Insert(0, 0);
+				temp.Reverse();
+				decodedBytes = temp.ToArray();
+			}
 
-			byte[] retArr = new byte[36];
+			byte[] retArr = new byte[40];
 			int retIdx = 0;
 			BigInteger baseChanger = BigInteger.Abs(new BigInteger(decodedBytes));
 			BigInteger baseFiftyEight = new BigInteger(58);
 			BigInteger modulo = new BigInteger();
-			Console.WriteLine(baseChanger);
 			while (!baseChanger.IsZero) {
 				baseChanger = BigInteger.DivRem(baseChanger, baseFiftyEight, out modulo);
 				retArr[retIdx++] = (byte) modulo;
