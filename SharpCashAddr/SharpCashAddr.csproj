@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>DesWurstes</Authors>
+    <Company />
+    <Description>Cash Address library for Bitcoin Cash address conversion 
+
+</Description>
+    <RepositoryUrl>https://github.com/cashaddress/SharpCashAddr</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageProjectUrl>https://github.com/cashaddress/SharpCashAddr</PackageProjectUrl>
+    <PackageTags>BCH Crypto Bitcoin Cash Address</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
