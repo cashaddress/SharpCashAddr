@@ -42,5 +42,21 @@ namespace SharpCashAddrTests
 			for (int i = 0; i < cashAddr.Length; i++)
 				Assert.Equal(cashAddrToOldAddr(cashAddr[i], out _, out _), oldAddr[i]);
 		}
-	}
+
+        [Fact]
+        public static void conversionToOldAddrExtension()
+        {
+            for (int i = 0; i < cashAddr.Length; i++)
+                Assert.Equal( cashAddr[i].ToOldAddress(), oldAddr[i]);
+        }
+
+        [Fact]
+        public static void conversionToCashAddrExtension()
+        {
+            for (int i = 0; i < oldAddr.Length; i++)
+                Assert.Equal(oldAddr[i].ToCashAddress(), cashAddr[i]);
+        }
+
+
+    }
 }
