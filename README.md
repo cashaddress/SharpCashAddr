@@ -1,6 +1,6 @@
 # SharpCashAddr
 
-[![NuGet](https://img.shields.io/nuget/v/SharpCashAddr.svg)](https://github.com/cashaddress/SharpCashAddr)
+[![NuGet](https://img.shields.io/nuget/v/SharpCashAddr.svg)](https://www.nuget.org/packages/SharpCashAddr/)
 
 CashAddr library for Bitcoin Cash address conversion in C#!
 
