@@ -12,6 +12,7 @@
     <PackageProjectUrl>https://github.com/cashaddress/SharpCashAddr</PackageProjectUrl>
     <PackageTags>BCH Crypto Bitcoin Cash Address</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/cashaddress/SharpCashAddr/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
 </Project>

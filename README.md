@@ -1,9 +1,19 @@
 # SharpCashAddr
 
+[![NuGet](https://img.shields.io/nuget/v/SharpCashAddr.svg)](https://github.com/cashaddress/SharpCashAddr)
+
 CashAddr library for Bitcoin Cash address conversion in C#!
 
 This public domain project was initially made for @FalkVinge.
 
 It's completely stable and well-tested.
 
-DLLs can be downloaded [here](/releases).
+## Install via NuGet
+
+If you want to include SharpCashAddr in your project, you can [install it directly from NuGet](https://www.nuget.org/packages/SharpCashAddr/).
+
+To install SharpCashAddr, run the following command in the Package Manager Console:
+
+```
+PM> Install-Package SharpCashAddr
+```
